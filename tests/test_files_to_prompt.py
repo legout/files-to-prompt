@@ -28,6 +28,33 @@ def test_basic_functionality(tmpdir):
         assert "test_dir/file2.txt" in result.output
         assert "Contents of file2" in result.output
 
+def test_basic_local_fsspec_functionality(tmpdir):
+    runner = CliRunner()
+    with tmpdir.as_cwd():
+        os.makedirs("test_dir")
+        with open("test_dir/file1.txt", "w") as f:
+            f.write("Contents of file1")
+        with open("test_dir/file2.txt", "w") as f:
+            f.write("Contents of file2")
+
+        result = runner.invoke(cli, ["file://test_dir"])
+        assert result.exit_code == 0
+        assert "test_dir/file1.txt" in result.output
+        assert "Contents of file1" in result.output
+        assert "test_dir/file2.txt" in result.output
+        assert "Contents of file2" in result.output
+
+def test_basic_github_fsspec_functionality():
+    runner = CliRunner()
+    
+
+    result = runner.invoke(cli, ["github://files_to_prompt", "-so", "org="])
+    assert result.exit_code == 0
+    assert "test_dir/file1.txt" in result.output
+    assert "Contents of file1" in result.output
+    assert "test_dir/file2.txt" in result.output
+    assert "Contents of file2" in result.output
+
 
 def test_include_hidden(tmpdir):
     runner = CliRunner()

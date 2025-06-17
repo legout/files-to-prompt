@@ -1,3 +1,17 @@
+/workspaces/files-to-prompt/files_to_prompt/__init__.py
+```python
+
+```
+/workspaces/files-to-prompt/files_to_prompt/__main__.py
+```python
+from .cli import cli
+
+if __name__ == "__main__":
+    cli()
+
+```
+/workspaces/files-to-prompt/files_to_prompt/cli.py
+````python
 import os
 import sys
 from fnmatch import fnmatch
@@ -405,3 +419,5 @@ def cli(
         writer("</documents>")
     if fp:
         fp.close()
+
+````
